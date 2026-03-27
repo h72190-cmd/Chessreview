@@ -1,0 +1,6 @@
+{
+	"appId": "com.chessreview.app",
+	"appName": "Chess Review",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}
