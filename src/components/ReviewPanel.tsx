@@ -16,7 +16,14 @@ import { useState, useEffect } from "react";
 import { Chess } from "chess.js";
 import { GoogleGenAI, Modality } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let ai: GoogleGenAI | null = null;
+try {
+  if (process.env.GEMINI_API_KEY) {
+    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  }
+} catch (e) {
+  console.warn("Failed to initialize Gemini API:", e);
+}
 
 interface ReviewPanelProps {
   moves: AnalyzedMove[];
@@ -42,6 +49,10 @@ export const ReviewPanel = ({
 
   const playPraggVoice = async (text: string) => {
     if (isPlayingAudio) return;
+    if (!ai) {
+      alert("Gemini API key is not configured. Please add it to your Vercel environment variables to use the voice feature.");
+      return;
+    }
     setIsPlayingAudio(true);
     try {
       const prompt = `Read this chess move explanation as Praggnanandhaa, the young Indian chess grandmaster. Be casual, enthusiastic, and insightful. Use a slight Indian English cadence if possible, but keep it natural. Text: "${text}"`;
