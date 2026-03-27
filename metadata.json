@@ -1,0 +1,5 @@
+{
+  "name": "Chess Review Pro",
+  "description": "A modern, fully functional Chess Review app inspired by Chess.com's Game Review feature. Analyze games move-by-move with Stockfish.",
+  "requestFramePermissions": []
+}
