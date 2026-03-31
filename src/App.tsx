@@ -122,6 +122,30 @@ export default function App() {
 
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto p-4 pb-24 md:pb-4 relative no-scrollbar">
+        {/* Global Loading Overlay */}
+        {isAnalyzing && (
+          <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4">
+            <div className="w-full max-w-md bg-[#262421] p-6 rounded-xl shadow-2xl border border-[#3c3a38] flex flex-col items-center gap-6">
+              <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin" />
+              <div className="text-center">
+                <h2 className="text-xl font-bold text-white mb-1">Analyzing Game...</h2>
+                <p className="text-gray-400 text-sm">Stockfish is evaluating the positions</p>
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <div className="w-full bg-[#3c3a38] h-3 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-green-500 transition-all duration-300 ease-out"
+                    style={{ width: `${Math.max(5, progress * 100)}%` }}
+                  />
+                </div>
+                <div className="text-right text-gray-400 font-mono text-sm">
+                  {Math.round(progress * 100)}%
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {activeTab === "home" && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -204,7 +228,7 @@ export default function App() {
             </div>
 
             {/* Right Column: Review Panel */}
-            <div className="w-full md:w-80 h-[400px] md:h-auto flex flex-col">
+            <div className="w-full md:w-80 h-[650px] md:h-auto flex flex-col shrink-0">
               <ReviewPanel
                 moves={moves}
                 currentMoveIndex={currentMoveIndex}

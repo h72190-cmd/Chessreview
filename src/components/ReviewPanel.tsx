@@ -222,7 +222,7 @@ export const ReviewPanel = ({
   return (
     <div className="flex flex-col h-full bg-[#262421] text-white rounded-lg overflow-hidden shadow-xl">
       {/* Header */}
-      <div className="p-4 border-b border-[#3c3a38] flex flex-col gap-2">
+      <div className="p-4 border-b border-[#3c3a38] flex flex-col gap-2 shrink-0">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Game Review</h2>
           {summary && summary.openingName && (
@@ -257,7 +257,7 @@ export const ReviewPanel = ({
       </div>
 
       {/* Move List */}
-      <div className="flex-1 overflow-y-auto p-2 bg-[#302e2b] no-scrollbar">
+      <div className="flex-1 min-h-[150px] overflow-y-auto p-2 bg-[#302e2b] no-scrollbar">
         <div className="grid grid-cols-[auto_1fr_1fr] gap-x-2 gap-y-1 text-sm font-mono">
           {moves.reduce((acc: React.ReactNode[], move, i) => {
             if (i % 2 === 0) {
@@ -312,7 +312,7 @@ export const ReviewPanel = ({
 
       {/* Current Move Details */}
       {currentMove && (
-        <div className="p-4 bg-[#262421] border-t border-[#3c3a38]">
+        <div className="p-4 bg-[#262421] border-t border-[#3c3a38] shrink-0 max-h-[250px] overflow-y-auto no-scrollbar">
           <div className="flex items-center gap-2 mb-2">
             <span
               className={clsx(
@@ -375,7 +375,7 @@ export const ReviewPanel = ({
 
       {/* Book Moves Section */}
       {bookMoves.length > 0 && (
-        <div className="p-4 bg-[#262421] border-t border-[#3c3a38]">
+        <div className="p-4 bg-[#262421] border-t border-[#3c3a38] shrink-0 max-h-[150px] overflow-y-auto no-scrollbar">
           <div className="flex items-center gap-2 mb-3 text-gray-300">
             <BookOpen size={18} />
             <h3 className="font-semibold text-sm">Masters Database</h3>
@@ -423,7 +423,7 @@ export const ReviewPanel = ({
       )}
 
       {/* Controls */}
-      <div className="p-4 bg-[#21201d] flex flex-col gap-3 border-t border-[#3c3a38]">
+      <div className="p-4 bg-[#21201d] flex flex-col gap-3 border-t border-[#3c3a38] shrink-0">
         <div className="flex justify-center gap-4">
           <button
             onClick={() => onMoveSelect(-1)}

@@ -142,36 +142,38 @@ export const ImportTab = ({ onImport }: ImportTabProps) => {
         <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
           <Download className="text-green-400" /> Import from Chess.com
         </h2>
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 flex gap-2">
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-2">
             <input 
               type="text" 
               placeholder="Enter Chess.com Username" 
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && fetchGames()}
-              className="flex-1 bg-[#3c3a38] text-white px-4 py-3 rounded-lg border border-[#4b4845] focus:outline-none focus:border-green-500 transition-colors"
+              className="flex-1 bg-[#3c3a38] text-white px-4 py-3 rounded-lg border border-[#4b4845] focus:outline-none focus:border-green-500 transition-colors min-w-0"
             />
             <button 
               onClick={fetchGames}
               disabled={isLoading || !username.trim()}
-              className="bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white px-6 py-3 rounded-lg font-bold transition-colors flex items-center gap-2"
+              className="bg-green-600 hover:bg-green-500 disabled:opacity-50 text-white px-4 md:px-6 py-3 rounded-lg font-bold transition-colors flex items-center justify-center gap-2 shrink-0"
             >
               {isLoading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Search size={20} />}
               <span className="hidden sm:inline">Fetch Games</span>
             </button>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-gray-400">or</span>
-            <button 
-              onClick={() => fileInputRef.current?.click()}
-              className="bg-[#3c3a38] hover:bg-[#4b4845] text-white px-6 py-3 rounded-lg font-bold transition-colors flex items-center gap-2 border border-[#4b4845]"
-            >
-              <Upload size={20} />
-              <span className="hidden sm:inline">Upload PGN</span>
-            </button>
-            <input type="file" accept=".pgn" ref={fileInputRef} onChange={handleFileUpload} className="hidden" />
+            <div className="h-px bg-[#4b4845] flex-1"></div>
+            <span className="text-gray-400 text-sm uppercase font-bold">or</span>
+            <div className="h-px bg-[#4b4845] flex-1"></div>
           </div>
+          <button 
+            onClick={() => fileInputRef.current?.click()}
+            className="w-full bg-[#3c3a38] hover:bg-[#4b4845] text-white px-6 py-3 rounded-lg font-bold transition-colors flex items-center justify-center gap-2 border border-[#4b4845]"
+          >
+            <Upload size={20} />
+            <span>Upload PGN File</span>
+          </button>
+          <input type="file" accept=".pgn" ref={fileInputRef} onChange={handleFileUpload} className="hidden" />
         </div>
         {error && <p className="text-red-400 mt-3 text-sm">{error}</p>}
       </div>
@@ -187,7 +189,7 @@ export const ImportTab = ({ onImport }: ImportTabProps) => {
             <div className="text-xs text-gray-500 mt-2">{wins}W {losses}L {draws}D</div>
           </div>
           
-          <div className="md:col-span-3 bg-[#262421] p-4 rounded-xl border border-[#3c3a38] flex items-center gap-2 overflow-x-auto">
+          <div className="md:col-span-3 bg-[#262421] p-4 rounded-xl border border-[#3c3a38] flex items-center gap-2 overflow-x-auto no-scrollbar">
             <FilterButton active={filter === "all"} onClick={() => setFilter("all")} label="All Games" />
             <FilterButton active={filter === "blitz"} onClick={() => setFilter("blitz")} icon={<Zap size={16} />} label="Blitz" />
             <FilterButton active={filter === "rapid"} onClick={() => setFilter("rapid")} icon={<Clock size={16} />} label="Rapid" />
@@ -199,8 +201,8 @@ export const ImportTab = ({ onImport }: ImportTabProps) => {
       {/* Games List */}
       <div className="flex flex-col gap-3 pb-8">
         {filteredGames.map((game) => (
-          <div key={game.id} className="bg-[#262421] p-4 rounded-xl border border-[#3c3a38] hover:border-[#4b4845] transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
+          <div key={game.id} className="bg-[#262421] p-4 rounded-xl border border-[#3c3a38] hover:border-[#4b4845] transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full overflow-hidden">
+            <div className="flex items-center gap-4 w-full sm:w-auto min-w-0">
               <div className={clsx(
                 "w-12 h-12 rounded-lg flex items-center justify-center font-bold text-lg shrink-0",
                 game.result === "win" ? "bg-green-500/20 text-green-400" :
@@ -209,15 +211,21 @@ export const ImportTab = ({ onImport }: ImportTabProps) => {
               )}>
                 {game.result === "win" ? "W" : game.result === "loss" ? "L" : "D"}
               </div>
-              <div>
-                <div className="flex items-center gap-2 text-lg">
-                  <span className={game.userColor === "white" ? "text-white font-bold" : "text-gray-400"}>{game.white} ({game.whiteRating})</span>
-                  <span className="text-gray-500 text-sm">vs</span>
-                  <span className={game.userColor === "black" ? "text-white font-bold" : "text-gray-400"}>{game.black} ({game.blackRating})</span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1.5 sm:gap-2 text-base sm:text-lg">
+                  <div className="flex items-baseline gap-1 min-w-0">
+                    <span className={clsx("truncate block max-w-[70px] sm:max-w-[150px]", game.userColor === "white" ? "text-white font-bold" : "text-gray-400")} title={game.white}>{game.white}</span>
+                    <span className="text-xs font-normal text-gray-400 shrink-0">({game.whiteRating})</span>
+                  </div>
+                  <span className="text-gray-500 text-sm shrink-0">vs</span>
+                  <div className="flex items-baseline gap-1 min-w-0">
+                    <span className={clsx("truncate block max-w-[70px] sm:max-w-[150px]", game.userColor === "black" ? "text-white font-bold" : "text-gray-400")} title={game.black}>{game.black}</span>
+                    <span className="text-xs font-normal text-gray-400 shrink-0">({game.blackRating})</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
-                  <span className="flex items-center gap-1"><Calendar size={14} /> {game.date.toLocaleDateString()}</span>
-                  <span className="capitalize flex items-center gap-1">
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-gray-500 mt-1">
+                  <span className="flex items-center gap-1 shrink-0"><Calendar size={14} /> {game.date.toLocaleDateString()}</span>
+                  <span className="capitalize flex items-center gap-1 shrink-0">
                     {game.timeClass === "blitz" ? <Zap size={14} /> : game.timeClass === "rapid" ? <Clock size={14} /> : <Target size={14} />}
                     {game.timeClass}
                   </span>
@@ -226,7 +234,7 @@ export const ImportTab = ({ onImport }: ImportTabProps) => {
             </div>
             <button 
               onClick={() => onImport(game.pgn)}
-              className="w-full sm:w-auto bg-[#3c3a38] hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 group"
+              className="w-full sm:w-auto bg-[#3c3a38] hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 group shrink-0"
             >
               Review <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
