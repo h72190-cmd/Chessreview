@@ -280,7 +280,7 @@ export const PlayTab = () => {
   );
 
   return (
-    <div className="h-full flex flex-col md:flex-row items-center justify-center gap-8 w-full">
+    <div className="h-full flex flex-col md:flex-row items-center justify-start md:justify-center gap-4 md:gap-8 w-full overflow-y-auto no-scrollbar pb-10">
       {/* Left side: Board */}
       <div className="w-full max-w-[500px] shrink-0">
         <div className="flex items-center gap-3 mb-3 px-2">

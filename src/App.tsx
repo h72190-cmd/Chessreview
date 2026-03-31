@@ -86,7 +86,12 @@ export default function App() {
   const isMistake = currentMove?.classification === "Mistake" || currentMove?.classification === "Blunder";
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-[#312E2B] text-white font-sans overflow-hidden">
+    <div className="flex flex-col md:flex-row fixed inset-0 w-full h-[100dvh] bg-[#312E2B] text-white font-sans overflow-hidden">
+      {/* Mobile Header */}
+      <div className="md:hidden flex items-center justify-center bg-[#262421] border-b border-[#3c3a38] safe-pt h-14 shrink-0 z-50">
+        <h1 className="text-lg font-bold text-green-400">Chess Review Pro</h1>
+      </div>
+
       {/* Side Navigation (Desktop) */}
       <div className="hidden md:flex h-full w-20 bg-[#262421] border-r border-[#3c3a38] flex-col items-center py-6 gap-8 z-50 shrink-0">
         <NavButton
@@ -116,14 +121,14 @@ export default function App() {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto p-4 pb-20 md:pb-4 relative">
+      <div className="flex-1 overflow-y-auto p-4 pb-24 md:pb-4 relative no-scrollbar">
         {activeTab === "home" && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="max-w-md mx-auto mt-10"
+            className="max-w-md mx-auto mt-4 md:mt-10"
           >
-            <h1 className="text-3xl font-bold mb-6 text-center text-green-400">
+            <h1 className="hidden md:block text-3xl font-bold mb-6 text-center text-green-400">
               Chess Review Pro
             </h1>
             <div className="bg-[#262421] p-6 rounded-lg shadow-xl">
@@ -243,7 +248,7 @@ export default function App() {
       </div>
 
       {/* Bottom Navigation (Mobile) */}
-      <div className="fixed bottom-0 w-full bg-[#262421] border-t border-[#3c3a38] flex justify-around py-3 px-4 md:hidden z-50">
+      <div className="fixed bottom-0 w-full bg-[#262421]/90 backdrop-blur-md border-t border-[#3c3a38] flex justify-around pt-3 pb-[calc(env(safe-area-inset-bottom)+12px)] px-4 md:hidden z-50">
         <NavButton
           icon={<Upload />}
           label="Home"

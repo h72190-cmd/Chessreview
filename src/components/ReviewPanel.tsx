@@ -257,7 +257,7 @@ export const ReviewPanel = ({
       </div>
 
       {/* Move List */}
-      <div className="flex-1 overflow-y-auto p-2 bg-[#302e2b]">
+      <div className="flex-1 overflow-y-auto p-2 bg-[#302e2b] no-scrollbar">
         <div className="grid grid-cols-[auto_1fr_1fr] gap-x-2 gap-y-1 text-sm font-mono">
           {moves.reduce((acc: React.ReactNode[], move, i) => {
             if (i % 2 === 0) {
@@ -470,6 +470,8 @@ export const ReviewPanel = ({
             onMouseDown={handlePreviewBestMove}
             onMouseUp={clearPreview}
             onMouseLeave={clearPreview}
+            onTouchStart={handlePreviewBestMove}
+            onTouchEnd={clearPreview}
             disabled={!currentMove || !currentMove.bestMove}
             className="px-4 py-2 bg-green-600/80 hover:bg-green-500 rounded text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex-1 text-white"
           >

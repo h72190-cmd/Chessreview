@@ -1,0 +1,7 @@
+{
+  "name": "Chess Review",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

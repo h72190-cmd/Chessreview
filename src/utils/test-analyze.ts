@@ -1,4 +1,4 @@
-import { analyzeGame } from "./src/utils/chess";
+import { analyzeGame } from "./chess";
 
 async function test() {
   const pgn = "1. e4 e5 2. Nf3 Nc6";
